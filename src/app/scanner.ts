@@ -92,7 +92,7 @@ export class Scanner {
           let tempDigit: string = line[index].toString();
           while(index+1 <= line.length-1){
               if(!isNaN(line[index+1]) && line[index] != " "){
-                  tempDigit= line[index];
+                  tempDigit+= line[index+1];
                   index++;
               }else{
                   break;
@@ -135,10 +135,9 @@ export class Scanner {
           }
       }else if(this.isLetter(line[index])){
           let temp: string = line[index].toString();
-          console.log(temp);
           while (index+1<=line.length-1 ) 
           {
-              if((!isNaN(line[index+1]) || this.isLetter(line[index+1])) || line[index+1] =="_" && line[index] != " "){
+              if((!isNaN(line[index+1]) || this.isLetter(line[index+1]) || line[index+1] =="_")  && line[index] != " "){
                 temp += line[index+1];
                 index++;
               }
