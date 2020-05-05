@@ -68,9 +68,9 @@ export class Scanner {
       } else if (line[index] == ':') {
         token = new Token(':', "Symbol", TokenType.Colon, this.line, this.tokenNumber++);
       } else if (line[index] == '[') {
-        token = new Token('[', "OpenSquarBrace", TokenType.OpenSquarBrace, this.line, this.tokenNumber++);
+        token = new Token('[', "Open Squared Brace", TokenType.OpenSquareBrace, this.line, this.tokenNumber++);
       } else if (line[index] == ']') {
-        token = new Token(']', "CloseSquarBrace", TokenType.CloseSquarBrace, this.line, this.tokenNumber++);
+        token = new Token(']', "Closed Square Brace", TokenType.CloseSquareBrace, this.line, this.tokenNumber++);
       } else if (line[index] == '(') {
         token = new Token('(', "OpenBrace", TokenType.OpenBrace, this.line, this.tokenNumber++);
       } else if (line[index] == ')') {
@@ -135,9 +135,10 @@ export class Scanner {
           }
       }else if(this.isLetter(line[index])){
           let temp: string = line[index].toString();
+          console.log(temp);
           while (index+1<=line.length-1 ) 
           {
-              if((!isNaN(line[index+1]) || this.isLetter(line[index+1])) && line[index] != " "){
+              if((!isNaN(line[index+1]) || this.isLetter(line[index+1])) || line[index+1] =="_" && line[index] != " "){
                 temp += line[index+1];
                 index++;
               }
