@@ -26,5 +26,6 @@ export enum TokenType {
   Division,
   Subtraction,
   Num,
+  Return,
   Other
 }

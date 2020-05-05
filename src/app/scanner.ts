@@ -50,6 +50,8 @@ export class Scanner {
         return new Token(str, "Reserved word", TokenType.Print, this.line, this.tokenNumber++);
       case "if":
         return new Token(str, "Reserved word", TokenType.If, this.line, this.tokenNumber++);
+      case "return":
+        return new Token(str, "Reserved word", TokenType.Return, this.line, this.tokenNumber++);
       default:
         return new Token(str, "ID", TokenType.ID, this.line, this.tokenNumber++);
     }
