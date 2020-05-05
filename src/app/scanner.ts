@@ -60,7 +60,6 @@ export class Scanner {
   private checkToken(line: any) {
     let token: Token;
     for (let index = 0; index < line.length; index++) {
-        debugger
       //skip the checking if it's a white space
       if (line[index] === ' ') {
         continue;
@@ -93,7 +92,7 @@ export class Scanner {
           let tempDigit: string = line[index].toString();
           while(index+1 <= line.length-1){
               if(!isNaN(line[index+1]) && line[index] != " "){
-                  tempDigit+= line[index];
+                  tempDigit= line[index];
                   index++;
               }else{
                   break;
