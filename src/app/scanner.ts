@@ -84,9 +84,20 @@ export class Scanner {
       } else if (line[index] == '/') {
         token = new Token('/', "Division", TokenType.Division, this.line, this.tokenNumber++);
       } else if (line[index] == '>') {
-        token = new Token('>', "Greater than", TokenType.Great, this.line, this.tokenNumber++);
+        if(line[index+1] == '='){
+          token = new Token(line[index]+line[index+1]+"" , "LexicalError", TokenType.Other, this.line, this.tokenNumber++);
+          index++;
+        }else{
+          token = new Token('>', "Greater than", TokenType.Great, this.line, this.tokenNumber++);
+        }
+        
       } else if (line[index] == '<') {
-        token = new Token('<', "Less than", TokenType.Les, this.line, this.tokenNumber++);
+        if(line[index+1] == '='){
+          token = new Token(line[index]+line[index+1]+"" , "LexicalError", TokenType.Other, this.line, this.tokenNumber++);
+          index++;
+        }else{
+          token = new Token('<', "Less than", TokenType.Les, this.line, this.tokenNumber++);
+        }
       } else if (!isNaN(line[index]) && line[index] != " "){
 
           let tempDigit: string = line[index].toString();
