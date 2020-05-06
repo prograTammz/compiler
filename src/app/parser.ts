@@ -49,8 +49,12 @@ export class Parser {
     private var(): void{
 
     }
-    private type(): void{
-
+    private type(): boolean{
+        if(this.tokenChecker(TokenType.var)){
+            this.currentIndex ++;
+            return true;
+        }
+        return false;
     }
     private mvars(): void{
 
