@@ -12,6 +12,7 @@ export class Scanner {
   line: number;
   tokenNumber: number;
   tableValues: TableElement[];
+  tokenList: Token[];
   lines: string[];
 
 
@@ -20,6 +21,7 @@ export class Scanner {
     this.tokenNumber = 1;
     this.lines = code.split('\n');
     this.tableValues = [];
+    this.tokenList = [];
     this.scan();
   }
 
@@ -165,6 +167,7 @@ export class Scanner {
         }
         let tableValue: TableElement = {number: token.tokenNumber, tokenName: token.lex, lineNumber: token.lineNumber, tokenType: token.tokenName}
         this.tableValues.push(tableValue);
+        this.tokenList.push(token);
     }
     
   }
@@ -182,5 +185,8 @@ export class Scanner {
   getLexTable():TableElement[]{
       
       return this.tableValues;
+  }
+  public getTokenList():Token[]{
+    return this.tokenList;
   }
 }
