@@ -20,11 +20,7 @@ export class Parser {
         this.progran();
     }
     private progran(): void{
-        console.log("a7a");
-        switch(this.tokens[this.currentIndex].getType){
-            case TokenType.var.toString:
-                console.log("a7a");
-        }
+         
     }
     private block(): void{
 
@@ -77,9 +73,21 @@ export class Parser {
     private ro():void{
 
     }
-    private addError(token: Token, expectedToken: TokenType):void{
+    private tokenChecker(token: TokenType): boolean{
+        return this.currentTokenString() == token.toString()
+
+    }
+    private currentTokenString():string{
+        return this.tokens[this.currentIndex].getType()
+    }
+    private currentToken():Token{
+        return this.tokens[this.currentIndex]
+    }
+    private addError(expectedToken: TokenType):void{
         this.errorCount++;
-        this.error += `ERROR: in line ${token.getLineNumber}. ${expectedToken.toString} Was expected found ${token.getType()} instead.\n`
+        let token = this.currentToken();
+        this.error += `ERROR: in line ${token.getLineNumber}. ${expectedToken.toString} Was expected found ${token.getType()} instead.\n`;
+        this.parsingState = false;
     }
     public getError():string{
         return this.error;
