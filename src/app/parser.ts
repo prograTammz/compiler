@@ -224,6 +224,44 @@ export class Parser {
     }
     private ro():void{
 
+        //Less than and Equal
+        if(this.tokenChecker(TokenType.LessEqual)){
+            this.currentIndex++;
+        }else{
+            this.addError(TokenType.LessEqual)
+            return;
+        }
+
+        //Greater than and Equal
+        if(this.tokenChecker(TokenType.GreatEqual)){
+            this.currentIndex++;
+        }else{
+            this.addError(TokenType.GreatEqual);
+            return;
+        }
+
+        //Greater than
+        if(this.tokenChecker(TokenType.Great)){
+            this.currentIndex++;
+        }else{
+            this.addError(TokenType.Great);
+            return;
+        }
+        //Less than
+        if(this.tokenChecker(TokenType.Les)){
+            this.currentIndex++;
+        }else{
+            this.addError(TokenType.Les);
+            return;
+        }
+
+        //Not equal
+        if(this.tokenChecker(TokenType.NotEqual)){
+            this.currentIndex++;
+        }else{
+            this.addError(TokenType.NotEqual);
+            return;
+        }
     }
     private tokenChecker(token: TokenType): boolean{
         return this.currentTokenString() == token.toString()
