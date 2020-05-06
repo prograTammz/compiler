@@ -202,7 +202,25 @@ export class Parser {
         this.block();
     }
     private assign():void{
+        if(this.tokenChecker(TokenType.ID)){
+            this.currentIndex++;
+        }else{
+            this.addError(TokenType.ID);
+        }
 
+        if(this.tokenChecker(TokenType.Equal)){
+            this.currentIndex++;
+        }else{
+            this.addError(TokenType.Equal);
+        }
+
+        this.expr();
+
+        if(this.tokenChecker(TokenType.SemiColon)){
+            this.currentIndex++;
+        }else{
+            this.addError(TokenType.SemiColon);
+        }
     }
     private ro():void{
 
