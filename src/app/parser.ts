@@ -159,7 +159,25 @@ export class Parser {
         }
     }
     private IF():void{
-
+        if(this.tokenChecker(TokenType.If)){
+            this.currentIndex++;
+        }else{
+            this.addError(TokenType.If);
+        }
+        if(this.tokenChecker(TokenType.OpenSquareBrace)){
+            this.currentIndex++;
+        }else{
+            this.addError(TokenType.OpenSquareBrace);
+        }
+        this.expr();
+        this.ro();
+        this.expr();
+        if(this.tokenChecker(TokenType.CloseSquareBrace)){
+            this.currentIndex++;
+        }else{
+            this.addError(TokenType.CloseSquareBrace);
+        }
+        this.block();
     }
     private loop():void{
 
