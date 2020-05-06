@@ -96,7 +96,9 @@ export class Parser {
         }
     }
     private mstat():void{
-
+        if(this.stat()){
+            this.mstat();
+        }
     }
     private stat():boolean{
         switch(this.currentToken().tokenType){
