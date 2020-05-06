@@ -180,7 +180,26 @@ export class Parser {
         this.block();
     }
     private loop():void{
+        if(this.tokenChecker(TokenType.Repeat)){
+            this.currentIndex++;
+        }else{
+            this.addError(TokenType.Repeat);
+        }
 
+        if(this.tokenChecker(TokenType.OpenSquareBrace)){
+            this.currentIndex++;
+        }else{
+            this.addError(TokenType.OpenSquareBrace);
+        }
+        this.expr();
+        this.ro();
+        this.expr();
+        if(this.tokenChecker(TokenType.CloseSquareBrace)){
+            this.currentIndex++;
+        }else{
+            this.addError(TokenType.CloseSquareBrace);
+        }
+        this.block();
     }
     private assign():void{
 
