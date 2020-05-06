@@ -14,8 +14,10 @@ textarea{
     width: calc(100% - 54px);
     margin: 16px;
 }
-mat-card-actions{
-    margin-right: 16px;
+.mat-card .mat-card-actions:last-child{
+    margin-right: 8px;
+    padding: 0;
+    margin-bottom: 0px;
 }
 table{
     width: 100%;
