@@ -125,7 +125,23 @@ export class Parser {
         }
     }
     private in():void{
+        if(this.tokenChecker(TokenType.Read)){
+            this.currentIndex++;
+        }else{
+            this.addError(TokenType.Read);
+        }
 
+        if(this.tokenChecker(TokenType.ID)){
+            this.currentIndex++;
+        }else{
+            this.addError(TokenType.ID);
+        }
+
+        if(this.tokenChecker(TokenType.SemiColon)){
+            this.currentIndex++;
+        }else{
+            this.addError(TokenType.SemiColon);
+        }
     }
     private out():void{
 
