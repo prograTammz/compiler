@@ -144,7 +144,19 @@ export class Parser {
         }
     }
     private out():void{
+        if(this.tokenChecker(TokenType.Print)){
+            this.currentIndex++;
+        }else{
+            this.addError(TokenType.Print);
+        }
 
+        this.expr();
+
+        if(this.tokenChecker(TokenType.SemiColon)){
+            this.currentIndex++;
+        }else{
+            this.addError(TokenType.SemiColon);
+        }
     }
     private IF():void{
 
