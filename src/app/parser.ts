@@ -91,7 +91,9 @@ export class Parser {
 
     }
     private stats():void{
-
+        if(this.stat()){
+            this.mstat();
+        }
     }
     private mstat():void{
 
