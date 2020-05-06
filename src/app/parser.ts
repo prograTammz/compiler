@@ -98,8 +98,29 @@ export class Parser {
     private mstat():void{
 
     }
-    private stat():void{
-
+    private stat():boolean{
+        switch(this.currentToken().tokenType){
+            case TokenType.Read:
+                this.in();
+                return true;
+            case TokenType.Print:
+                this.out();
+                return true;
+            case TokenType.If:
+                this.IF();
+                return true;
+            case TokenType.begin:
+                this.block();
+                return true;
+            case TokenType.Repeat:
+                this.loop();
+                return true;
+            case TokenType.ID:
+                this.assign();
+                return true;
+            default:
+                return false;
+        }
     }
     private in():void{
 
