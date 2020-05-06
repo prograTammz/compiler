@@ -39,7 +39,6 @@ export class Parser {
         if(this.tokenChecker(TokenType.Return)){
             this.parsingState = true;
         }else{
-            this.parsingState = false;
             this.addError(TokenType.Return);
         }
     }
@@ -47,7 +46,19 @@ export class Parser {
 
     }
     private var(): void{
-
+        if(this.type()){
+            if(this.tokenChecker(TokenType.ID)){
+                this.currentIndex++;
+                this.mvars();
+            }else{
+                this.addError(TokenType.ID);
+            }
+            if(this.tokenChecker(TokenType.SemiColon)){
+                this.currentIndex++;
+            }else{
+                this.addError(TokenType.SemiColon)
+            }
+        }
     }
     private type(): boolean{
         if(this.tokenChecker(TokenType.var)){
