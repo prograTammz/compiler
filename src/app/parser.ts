@@ -68,7 +68,15 @@ export class Parser {
         return false;
     }
     private mvars(): void{
-
+        if(this.tokenChecker(TokenType.Colon)){
+            this.currentIndex++;
+            if(this.tokenChecker(TokenType.ID)){
+                this.currentIndex++;
+                this.mvars();
+            }else{
+                this.addError(TokenType.ID);
+            }
+        }
     }
     private expr():void{
 
