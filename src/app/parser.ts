@@ -73,9 +73,9 @@ export class Parser {
     private ro():void{
 
     }
-    private addError(token: Token):void{
+    private addError(token: Token, expectedToken: TokenType):void{
         this.errorCount++;
-        this.error += `An Error`
+        this.error += `ERROR: in line ${token.getLineNumber}. ${expectedToken} Was expected found ${token.getType} instead.`
     }
     public getError():string{
         return this.error;
