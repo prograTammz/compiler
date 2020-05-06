@@ -20,7 +20,28 @@ export class Parser {
         this.progran();
     }
     private progran(): void{
-         
+
+        if(this.tokenChecker(TokenType.var)){
+            this.var();
+        }else{
+            this.addError(TokenType.var);
+            return;
+        }
+
+        if(this.tokenChecker(TokenType.Do)){
+            this.currentIndex++;
+            this.block();
+        }else{
+            this.addError(TokenType.Do);
+            return;
+        }
+
+        if(this.tokenChecker(TokenType.Return)){
+            this.parsingState = true;
+        }else{
+            this.parsingState = false;
+            this.addError(TokenType.Return);
+        }
     }
     private block(): void{
 
@@ -61,7 +82,7 @@ export class Parser {
     private out():void{
 
     }
-    private if():void{
+    private IF():void{
 
     }
     private loop():void{
