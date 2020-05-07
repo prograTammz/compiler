@@ -23,9 +23,6 @@ export class Parser {
 
         if(this.tokenChecker(TokenType.var)){
             this.var();
-        }else{
-            this.addError(TokenType.var);
-            return;
         }
 
         if(this.tokenChecker(TokenType.Do)){
@@ -99,8 +96,6 @@ export class Parser {
         }else if(this.tokenChecker(TokenType.Division)){
             this.currentIndex++;
             this.expr();
-        }else{
-            this.addPossibleError(TokenType.Multiplication, TokenType.Division);
         }
     }
     private t():void{
@@ -111,8 +106,6 @@ export class Parser {
         }else if(this.tokenChecker(TokenType.Subtraction)){
             this.currentIndex++;
             this.expr();
-        }else{
-            this.addPossibleError(TokenType.Addition, TokenType.Subtraction);
         }
     }
     private f():void{
@@ -263,10 +256,10 @@ export class Parser {
             this.addError(TokenType.ID);
         }
 
-        if(this.tokenChecker(TokenType.Equal)){
+        if(this.tokenChecker(TokenType.Assign)){
             this.currentIndex++;
         }else{
-            this.addError(TokenType.Equal);
+            this.addError(TokenType.Assign);
         }
 
         this.expr();
@@ -280,42 +273,24 @@ export class Parser {
     private ro():void{
 
         //Less than and Equal
-        if(this.tokenChecker(TokenType.LessEqual)){
-            this.currentIndex++;
-        }else{
-            this.addError(TokenType.LessEqual)
-            return;
-        }
-
-        //Greater than and Equal
-        if(this.tokenChecker(TokenType.GreatEqual)){
-            this.currentIndex++;
-        }else{
-            this.addError(TokenType.GreatEqual);
-            return;
-        }
-
-        //Greater than
-        if(this.tokenChecker(TokenType.Great)){
-            this.currentIndex++;
-        }else{
-            this.addError(TokenType.Great);
-            return;
-        }
-        //Less than
-        if(this.tokenChecker(TokenType.Les)){
-            this.currentIndex++;
-        }else{
-            this.addError(TokenType.Les);
-            return;
-        }
-
-        //Not equal
-        if(this.tokenChecker(TokenType.NotEqual)){
-            this.currentIndex++;
-        }else{
-            this.addError(TokenType.NotEqual);
-            return;
+        switch(this.currentToken().tokenType){
+            case TokenType.LessEqual:
+                this.currentIndex++;
+                break;
+            case TokenType.GreatEqual:
+                this.currentIndex++;
+                break;
+            case TokenType.Great:
+                this.currentIndex++;
+                break;
+            case TokenType.Les:
+                this.currentIndex++;
+                break;
+            case TokenType.NotEqual:
+                this.currentIndex++;
+                break;
+            default:
+                this.addPossibleError(TokenType.Les, TokenType.NotEqual);
         }
     }
     private tokenChecker(token: TokenType): boolean{
@@ -331,13 +306,13 @@ export class Parser {
     private addError(expectedToken: TokenType):void{
         this.errorCount++;
         let token = this.currentToken();
-        this.error += `ERROR: in line ${token.getLineNumber}. ${expectedToken.toString} Was expected found ${token.getType()} instead.\n`;
+        this.error += `ERROR: in line ${token.getLineNumber()}. ${expectedToken.toString()} Was expected found ${token.getType()} instead.\n`;
         this.parsingState = false;
     }
     private addPossibleError(expectedTokenOne: TokenType, expectedTokenTwo: TokenType):void{
         this.errorCount++;
         let token = this.currentToken();
-        this.error += `ERROR: in line ${token.getLineNumber}. ${expectedTokenOne} or ${expectedTokenTwo} Was expected found ${token.getType()} instead.\n`;
+        this.error += `ERROR: in line ${token.getLineNumber()}. ${expectedTokenOne} or ${expectedTokenTwo} Was expected found ${token.getType()} instead.\n`;
         this.parsingState = false;
     }
     public getError():string{
