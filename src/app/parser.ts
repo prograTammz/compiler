@@ -85,7 +85,12 @@ export class Parser {
 
     }
     private f():void{
-
+        if(this.tokenChecker(TokenType.Subtraction)){
+            this.currentIndex++;
+            this.f();
+        }else{
+            this.r();
+        }
     }
     private r():void{
 
