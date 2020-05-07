@@ -43,7 +43,20 @@ export class Parser {
         }
     }
     private block(): void{
-
+        if(this.tokenChecker(TokenType.begin)){
+            this.currentIndex++;
+        }else{
+            this.addError(TokenType.begin);
+        }
+        if(this.tokenChecker(TokenType.var)){
+            this.var();
+        }
+        this.stats();
+        if(this.tokenChecker(TokenType.end)){
+            this.currentIndex++;
+        }else{
+            this.addError(TokenType.end);
+        }
     }
     private var(): void{
         if(this.type()){
