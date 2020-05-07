@@ -111,7 +111,7 @@ export class Parser {
                 this.currentIndex++;
                 break;
             default:
-                this.addError(TokenType.Num);
+                this.addPossibleError(TokenType.ID,TokenType.Num);
             }
     }
     private stats():void{
@@ -301,6 +301,12 @@ export class Parser {
         this.errorCount++;
         let token = this.currentToken();
         this.error += `ERROR: in line ${token.getLineNumber}. ${expectedToken.toString} Was expected found ${token.getType()} instead.\n`;
+        this.parsingState = false;
+    }
+    private addPossibleError(expectedTokenOne: TokenType, expectedTokenTwo: TokenType):void{
+        this.errorCount++;
+        let token = this.currentToken();
+        this.error += `ERROR: in line ${token.getLineNumber}. ${expectedTokenOne} or ${expectedTokenTwo} Was expected found ${token.getType()} instead.\n`;
         this.parsingState = false;
     }
     public getError():string{
