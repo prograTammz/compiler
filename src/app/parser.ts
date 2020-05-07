@@ -102,10 +102,10 @@ export class Parser {
         this.f();
         if(this.tokenChecker(TokenType.Addition)){
             this.currentIndex++;
-            this.expr();
+            this.t();
         }else if(this.tokenChecker(TokenType.Subtraction)){
             this.currentIndex++;
-            this.expr();
+            this.t();
         }
     }
     private f():void{
@@ -252,22 +252,16 @@ export class Parser {
     private assign():void{
         if(this.tokenChecker(TokenType.ID)){
             this.currentIndex++;
-        }else{
-            this.addError(TokenType.ID);
         }
 
         if(this.tokenChecker(TokenType.Assign)){
             this.currentIndex++;
-        }else{
-            this.addError(TokenType.Assign);
         }
 
         this.expr();
 
         if(this.tokenChecker(TokenType.SemiColon)){
             this.currentIndex++;
-        }else{
-            this.addError(TokenType.SemiColon);
         }
     }
     private ro():void{
