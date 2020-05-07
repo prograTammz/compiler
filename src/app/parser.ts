@@ -92,7 +92,16 @@ export class Parser {
         }
     }
     private expr():void{
-
+        this.t();
+        if(this.tokenChecker(TokenType.Multiplication)){
+            this.currentIndex++;
+            this.expr();
+        }else if(this.tokenChecker(TokenType.Division)){
+            this.currentIndex++;
+            this.expr();
+        }else{
+            this.addPossibleError(TokenType.Multiplication, TokenType.Division);
+        }
     }
     private t():void{
 
