@@ -104,7 +104,16 @@ export class Parser {
         }
     }
     private t():void{
-
+        this.f();
+        if(this.tokenChecker(TokenType.Addition)){
+            this.currentIndex++;
+            this.expr();
+        }else if(this.tokenChecker(TokenType.Subtraction)){
+            this.currentIndex++;
+            this.expr();
+        }else{
+            this.addPossibleError(TokenType.Addition, TokenType.Subtraction);
+        }
     }
     private f():void{
         if(this.tokenChecker(TokenType.Subtraction)){
