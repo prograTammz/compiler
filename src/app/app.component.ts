@@ -4,6 +4,9 @@ import { TableElement } from './table-element';
 import{Parser} from './parser';
 import { MatTable } from '@angular/material/table';
 import { Component, ViewChild } from '@angular/core';
+import {
+  Token
+} from './token';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,6 +18,7 @@ export class AppComponent {
   lineArray = [];
   dataSource: TableElement[];
   displayedColumns: string[];
+  tokenList: Token[];
   isAnalyzed = false;
   anaylze(code: string): void{
     //splits the input into separate lines represented as an array of strings.
@@ -22,10 +26,15 @@ export class AppComponent {
     this.displayedColumns = ['number', 'tokenName', 'lineNumber', 'tokenType'];
     this.dataSource = scanner.getLexTable();
     this.isAnalyzed = true;
-    let parser = new Parser(scanner.getTokenList());
+    this.tokenList = scanner.getTokenList();
+    
+  }
+  parse(){
+    let parser = new Parser(this.tokenList);
     console.log(parser.getError());
     console.log(parser.getState());
   }
+
 }
 
 
