@@ -23,6 +23,8 @@ export class AppComponent {
     this.dataSource = scanner.getLexTable();
     this.isAnalyzed = true;
     let parser = new Parser(scanner.getTokenList());
+    console.log(parser.getError());
+    console.log(parser.getState());
   }
 }
 
