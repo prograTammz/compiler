@@ -93,7 +93,26 @@ export class Parser {
         }
     }
     private r():void{
-
+        switch(this.currentToken().tokenType){
+            case TokenType.OpenBrace:
+                this.currentIndex++;
+                this.expr();
+                if(this.tokenChecker(TokenType.CloseBrace)){
+                    this.currentIndex++;
+                }else{
+                    this.addError(TokenType.CloseBrace);
+                    return;
+                }
+                break;
+            case TokenType.ID:
+                this.currentIndex++;
+                break;
+            case TokenType.Num:
+                this.currentIndex++;
+                break;
+            default:
+                this.addError(TokenType.Num);
+            }
     }
     private stats():void{
         if(this.stat()){
