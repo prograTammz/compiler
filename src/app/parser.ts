@@ -13,6 +13,7 @@ export class Parser {
     currentIndex: number;
     parserTree: TreeNode[];
     nodeCounter: number;
+    rootNode: TreeNode;
     constructor(tokens: Token[]){
         this.tokens = tokens;
         this.parsingState = true;
@@ -43,6 +44,7 @@ export class Parser {
             this.addError(TokenType.Return);
         }
         this.parserTree.pop();
+        console.log("BACK");
     }
     private block(): void{
         this.addNode("BLOCK",LeafType.Terminal);
@@ -61,6 +63,7 @@ export class Parser {
             this.addError(TokenType.end);
         }
         this.parserTree.pop();
+        console.log("BACK");
     }
     private var(): void{
         this.addNode("VAR",LeafType.Terminal);
@@ -78,12 +81,14 @@ export class Parser {
             }
         }
         this.parserTree.pop();
+        console.log("BACK");
     }
     private type(): boolean{
         this.addNode("TYPE",LeafType.Terminal);
         if(this.tokenChecker(TokenType.var)){
             this.incrementIndex();
             this.parserTree.pop();
+            console.log("BACK");
             return true;
         }
         
@@ -102,6 +107,7 @@ export class Parser {
             }
         }
         this.parserTree.pop();
+        console.log("BACK");
     }
     private expr():void{
         this.addNode("EXPR",LeafType.Terminal);
@@ -114,6 +120,7 @@ export class Parser {
             this.expr();
         }
         this.parserTree.pop();
+        console.log("BACK");
     }
     private t():void{
         this.addNode("T",LeafType.Terminal);
@@ -126,6 +133,7 @@ export class Parser {
             this.t();
         }
         this.parserTree.pop();
+        console.log("BACK");
     }
     private f():void{
         this.addNode("F",LeafType.Terminal);
@@ -136,6 +144,7 @@ export class Parser {
             this.r();
         }
         this.parserTree.pop();
+        console.log("BACK");
     }
     private r():void{
         this.addNode("R",LeafType.Terminal);
@@ -160,6 +169,7 @@ export class Parser {
                 this.addPossibleError(TokenType.ID,TokenType.Num);
             }
             this.parserTree.pop();
+            console.log("BACK");
     }
     private stats():void{
         this.addNode("STATS",LeafType.Terminal);
@@ -167,6 +177,7 @@ export class Parser {
             this.mstat();
         }
         this.parserTree.pop();
+        console.log("BACK");
     }
     private mstat():void{
         this.addNode("MSTAT",LeafType.Terminal);
@@ -174,6 +185,7 @@ export class Parser {
             this.mstat();
         }
         this.parserTree.pop();
+        console.log("BACK");
     }
     private stat():boolean{
         this.addNode("STAT",LeafType.Terminal);
@@ -181,30 +193,37 @@ export class Parser {
             case TokenType.Read:
                 this.in();
                 this.parserTree.pop();
+                console.log("BACK");
                 return true;
             case TokenType.Print:
                 this.out();
                 this.parserTree.pop();
+                console.log("BACK");
                 return true;
             case TokenType.If:
                 this.IF();
                 this.parserTree.pop();
+                console.log("BACK");
                 return true;
             case TokenType.begin:
                 this.block();
                 this.parserTree.pop();
+                console.log("BACK");
                 return true;
             case TokenType.Repeat:
                 this.loop();
                 this.parserTree.pop();
+                console.log("BACK");
                 return true;
                 
             case TokenType.ID:
                 this.assign();
                 this.parserTree.pop();
+                console.log("BACK");
                 return true;
             default:
                 this.parserTree.pop();
+                console.log("BACK");
                 return false;
                 
         }
@@ -230,6 +249,7 @@ export class Parser {
             this.addError(TokenType.SemiColon);
         }
         this.parserTree.pop();
+        console.log("BACK");
     }
     private out():void{
         this.addNode("OUT",LeafType.Terminal);
@@ -247,6 +267,7 @@ export class Parser {
             this.addError(TokenType.SemiColon);
         }
         this.parserTree.pop();
+        console.log("BACK");
     }
     private IF():void{
         this.addNode("IF",LeafType.Terminal);
@@ -270,6 +291,7 @@ export class Parser {
         }
         this.block();
         this.parserTree.pop();
+        console.log("BACK");
     }
     private loop():void{
         this.addNode("LOOP",LeafType.Terminal);
@@ -294,6 +316,7 @@ export class Parser {
         }
         this.block();
         this.parserTree.pop();
+        console.log("BACK");
     }
     private assign():void{
         this.addNode("ASSIGN",LeafType.Terminal);
@@ -311,6 +334,7 @@ export class Parser {
             this.incrementIndex();
         }
         this.parserTree.pop();
+        console.log("BACK");
     }
     private ro():void{
         this.addNode("RO",LeafType.Terminal);
@@ -335,6 +359,7 @@ export class Parser {
                 this.addPossibleError(TokenType.Les, TokenType.NotEqual);
         }
         this.parserTree.pop();
+        console.log("BACK");
     }
     private incrementIndex():void{
         this.addNode(this.currentToken().getType(),LeafType.NonTerminal);
@@ -351,15 +376,26 @@ export class Parser {
         return this.tokens[this.currentIndex]
     }
     private addNode(name:string,type: LeafType){
-        let count;
-        if(this.parserTree.length == 0){
-            count = null;
+        let node: TreeNode;
+        if(type == LeafType.NonTerminal){
+            node = new TreeNode(this.nodeCounter, this.tokens[this.currentIndex].lex,type);
         }else{
-            count = this.parserTree[this.parserTree.length -1].getID();
+            node = new TreeNode(this.nodeCounter, name,type);
         }
-        let node = new TreeNode(this.nodeCounter, name,type,count);
-        this.parserTree.push(node);
+        
+        
+        if(this.parserTree.length == 0){
+            this.rootNode = node;
+        }else{
+            this.parserTree[this.parserTree.length-1].children.push(node);
+        }
+        
+        if(type == LeafType.Terminal){
+            this.parserTree.push(node);
+        }
         this.nodeCounter++;
+        
+        console.log(name,this.nodeCounter,this.parserTree.length,node );
     }
     private addError(expectedToken: TokenType):void{
         this.errorCount++;
@@ -380,14 +416,7 @@ export class Parser {
         return this.parsingState;
     }
     public createMapping():void{
-        for(let node of this.parserTree){
-            for(let child of this.parserTree){
-                if (node.getID() == child.getParentID()){
-                    node.children.push(child);
-                }
-            }
-        }
-        console.log(this.parserTree);
+        console.log(this.rootNode);
     }
     public getParserTree():TreeNode[]{
         return this.parserTree;
