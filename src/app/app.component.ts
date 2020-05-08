@@ -22,6 +22,8 @@ export class AppComponent {
   tokenList: Token[];
   isAnalyzed = false;
   currentTab = 0;
+  errorCount: number = 0;
+  errors: string[];
   anaylze(code: string): void{
     //splits the input into separate lines represented as an array of strings.
     let scanner = new Scanner(code);
@@ -37,10 +39,17 @@ export class AppComponent {
     console.log(parser.getState());
     console.log(parser.getRootNode());
     this.currentTab = 1;
-    setTimeout(() => {
-      this.processTree(parser.getRootNode(),document.getElementById("tree"));
-    }, 500);
-    
+    if(!parser.getState()){
+      this.errorCount = parser.getErrorCount();
+      this.errors = parser.getError().split("\n");
+      this.currentTab = 2;
+    }else{
+      setTimeout(() => {
+        this.processTree(parser.getRootNode(),document.getElementById("tree"));
+      }, 500);
+      this.errorCount = parser.getErrorCount();
+      this.errors = parser.getError().split("\n");
+    }
   }
   processTree(node: TreeNode,element){
     var li = document.createElement('li');
