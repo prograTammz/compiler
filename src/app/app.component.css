@@ -1,12 +1,18 @@
 
 .header{
-    color: white;
+    font-family: 'Julius Sans One', sans-serif;
+    color: rgba(0,0,0,.87);
     padding-top: 20px;
     padding-left: 20px;
 }
 mat-card{
     margin: 30px auto;
+    width: 80%;
     max-width: 1000px;
+    box-shadow:  -6px -6px 16px 0px rgba(255,255,255,0.5), 6px 6px 16px 0px rgba(209,205,199,0.5);
+    background-color: #EFEEEE;
+    border-color: rgba(255,255,255, 0.2);
+    
 }
 textarea{
     resize: vertical;
@@ -20,6 +26,18 @@ textarea{
     margin-bottom: 0px;
 }
 table{
-    width: 96%;
-    margin: 10px 2%;
+    width: 100%;
+    background-color: #EFEEEE;
+}
+@media only screen and (max-width: 600px) {
+    mat-card{
+        padding: 16px 8px;
+    }
+    textarea{
+        margin: 16px 8px;
+        width: calc(100% - 38px);
+    }
+    .mat-card .mat-card-actions:last-child{
+        margin-right: 2px;
+    }
 }
