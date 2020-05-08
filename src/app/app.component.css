@@ -1,9 +1,10 @@
 
 .header{
-    font-family: 'Julius Sans One', sans-serif;
+    font-family: "Roboto";
     color: rgba(0,0,0,.87);
     padding-top: 20px;
     padding-left: 20px;
+    font-weight: 300;
 }
 mat-card{
     margin: 30px auto;
