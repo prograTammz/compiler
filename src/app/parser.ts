@@ -387,7 +387,7 @@ export class Parser {
         this.nodeCounter++;
     }
     private addError(expectedToken: TokenType):void{
-        
+        this.errorCount++;
         let token = this.currentToken();
         this.error += `ERROR: in line ${token.getLineNumber()}. ${expectedToken.toString()} Was expected found ${token.getType()} instead.\n`;
         this.parsingState = false;
