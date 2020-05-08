@@ -7,7 +7,7 @@ import { Component, ViewChild } from '@angular/core';
 import {
   Token
 } from './token';
-import { TreeNode } from './treeNode';
+import { TreeNode, LeafType } from './treeNode';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -63,6 +63,9 @@ export class AppComponent {
     var ul = document.createElement('ul');
     li.appendChild(ul);
     for (var i = 0; i < node.children.length; i++) {
+      if (node.children[i].getType() == LeafType.Terminal && node.children[i].children.length == 0){
+        continue;
+      }
       this.processTree(node.children[i], ul);
     }
   }
