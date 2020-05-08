@@ -65,8 +65,11 @@
         </mat-tab>
         <mat-tab >
           <ng-template mat-tab-label>
-              <span matBadge="4" matBadgeOverlap="false">Error</span>
+              <span [matBadge]="errorCount" [matBadgeHidden]="errorCount == 0" matBadgeOverlap="false">Error</span>
           </ng-template>
+            <div class="errorList" *ngFor="let error of errors">
+              <p>{{ error }}</p>
+            </div>
         </mat-tab>
     </mat-tab-group>
   </mat-card-content>
