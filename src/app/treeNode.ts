@@ -6,14 +6,14 @@ export class TreeNode {
     private id: number;
     private name: string;
     private type: LeafType;
-    private parentId: number;
+    //private parentNode: TreeNode;
     public children: TreeNode[];
-    constructor(id:number, name: string,type: LeafType, parentId: number = null){
+    constructor(id:number, name: string,type: LeafType){
         this.id = id;
         this.name = name;
         this.type = type;
-        this.parentId = parentId;
         this.children =[];
+        //this.parentNode = null;
     }
 
     public getName(): string{
@@ -25,11 +25,11 @@ export class TreeNode {
     public getType(): LeafType{
         return this.type;
     }
-    public getParentID():number{
-        return this.parentId;
-    }
-    public setParentId(id: number):void{
-        this.parentId =id;
-        return;
-    }
+    // public getParent():TreeNode{
+    //     return this.parentNode;
+    // }
+    // public setParent(node: TreeNode):void{
+    //     this.parentNode = node;
+    //     return;
+    // }
 }
