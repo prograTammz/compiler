@@ -40,6 +40,9 @@ export class Parser {
 
         if(this.tokenChecker(TokenType.Return)){
             this.parsingState = true;
+            if(this.tokens.length == this.currentIndex){
+                this.parsingState = false;
+            }
         }else{
             this.addError(TokenType.Return);
         }
@@ -355,6 +358,11 @@ export class Parser {
 
     }
     private currentTokenString():string{
+        if(this.tokens.length == this.currentIndex){
+            this.addNoReturnError();
+            return "Return";
+
+        }
         return this.tokens[this.currentIndex].getType()
     }
     private currentToken():Token{
@@ -379,9 +387,14 @@ export class Parser {
         this.nodeCounter++;
     }
     private addError(expectedToken: TokenType):void{
-        this.errorCount++;
+        
         let token = this.currentToken();
         this.error += `ERROR: in line ${token.getLineNumber()}. ${expectedToken.toString()} Was expected found ${token.getType()} instead.\n`;
+        this.parsingState = false;
+    }
+    private addNoReturnError():void{
+        this.errorCount++;
+        this.error += `ERROR: in line Return wasn't found at the end of the file !\n`;
         this.parsingState = false;
     }
     private addPossibleError(expectedTokenOne: TokenType, expectedTokenTwo: TokenType):void{
