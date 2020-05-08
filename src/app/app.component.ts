@@ -33,6 +33,8 @@ export class AppComponent {
     let parser = new Parser(this.tokenList);
     console.log(parser.getError());
     console.log(parser.getState());
+    console.log(parser.getParserTree());
+    parser.createMapping();
   }
 
 }
