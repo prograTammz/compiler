@@ -20,13 +20,14 @@ export class Parser {
         this.progran();
     }
     private progran(): void{
+        console.log("PROGRAN");
 
         if(this.tokenChecker(TokenType.var)){
             this.var();
         }
 
         if(this.tokenChecker(TokenType.Do)){
-            this.currentIndex++;
+            this.incrementIndex();
             this.block();
         }else{
             this.addError(TokenType.Do);
@@ -38,10 +39,12 @@ export class Parser {
         }else{
             this.addError(TokenType.Return);
         }
+        console.log("GO BACK");
     }
     private block(): void{
+        console.log("BLOCK");
         if(this.tokenChecker(TokenType.begin)){
-            this.currentIndex++;
+            this.incrementIndex();
         }else{
             this.addError(TokenType.begin);
         }
@@ -50,150 +53,185 @@ export class Parser {
         }
         this.stats();
         if(this.tokenChecker(TokenType.end)){
-            this.currentIndex++;
+            this.incrementIndex();
         }else{
             this.addError(TokenType.end);
         }
+        console.log("GO BACK");
     }
     private var(): void{
+        console.log("VAR");
         if(this.type()){
             if(this.tokenChecker(TokenType.ID)){
-                this.currentIndex++;
+                this.incrementIndex();
                 this.mvars();
             }else{
                 this.addError(TokenType.ID);
             }
             if(this.tokenChecker(TokenType.SemiColon)){
-                this.currentIndex++;
+                this.incrementIndex();
             }else{
                 this.addError(TokenType.SemiColon)
             }
         }
+        console.log("GO BACK");
     }
     private type(): boolean{
+        console.log("TYPE");
         if(this.tokenChecker(TokenType.var)){
-            this.currentIndex ++;
+            this.incrementIndex();
+            console.log("GO BACK");
             return true;
         }
+        
         return false;
+        
     }
     private mvars(): void{
+        console.log("MVARS");
         if(this.tokenChecker(TokenType.Colon)){
-            this.currentIndex++;
+            this.incrementIndex();
             if(this.tokenChecker(TokenType.ID)){
-                this.currentIndex++;
+                this.incrementIndex();
                 this.mvars();
             }else{
                 this.addError(TokenType.ID);
             }
         }
+        console.log("GO BACK");
     }
     private expr():void{
+        console.log("EXPR");
         this.t();
         if(this.tokenChecker(TokenType.Multiplication)){
-            this.currentIndex++;
+            this.incrementIndex();
             this.expr();
         }else if(this.tokenChecker(TokenType.Division)){
-            this.currentIndex++;
+            this.incrementIndex();
             this.expr();
         }
+        console.log("GO BACK");
     }
     private t():void{
+        console.log("T");
         this.f();
         if(this.tokenChecker(TokenType.Addition)){
-            this.currentIndex++;
+            this.incrementIndex();
             this.t();
         }else if(this.tokenChecker(TokenType.Subtraction)){
-            this.currentIndex++;
+            this.incrementIndex();
             this.t();
         }
+        console.log("GO BACK");
     }
     private f():void{
+        console.log("F");
         if(this.tokenChecker(TokenType.Subtraction)){
-            this.currentIndex++;
+            this.incrementIndex();
             this.f();
         }else{
             this.r();
         }
+        console.log("GO BACK");
     }
     private r():void{
+        console.log("R");
         switch(this.currentToken().tokenType){
             case TokenType.OpenBrace:
-                this.currentIndex++;
+                this.incrementIndex();
                 this.expr();
                 if(this.tokenChecker(TokenType.CloseBrace)){
-                    this.currentIndex++;
+                    this.incrementIndex();
                 }else{
                     this.addError(TokenType.CloseBrace);
                     return;
                 }
                 break;
             case TokenType.ID:
-                this.currentIndex++;
+                this.incrementIndex();
                 break;
             case TokenType.Num:
-                this.currentIndex++;
+                this.incrementIndex();
                 break;
             default:
                 this.addPossibleError(TokenType.ID,TokenType.Num);
             }
+            console.log("GO BACK");
     }
     private stats():void{
+        console.log("STATS");
         if(this.stat()){
             this.mstat();
         }
+        console.log("GO BACK");
     }
     private mstat():void{
+        console.log("MSTAT");
         if(this.stat()){
             this.mstat();
         }
+        console.log("GO BACK");
     }
     private stat():boolean{
+        console.log("STAT");
         switch(this.currentToken().tokenType){
             case TokenType.Read:
                 this.in();
+                console.log("GO BACK");
                 return true;
             case TokenType.Print:
                 this.out();
+                console.log("GO BACK");
                 return true;
             case TokenType.If:
                 this.IF();
+                console.log("GO BACK");
                 return true;
             case TokenType.begin:
                 this.block();
+                console.log("GO BACK");
                 return true;
             case TokenType.Repeat:
                 this.loop();
+                console.log("GO BACK");
                 return true;
+                
             case TokenType.ID:
                 this.assign();
+                console.log("GO BACK");
                 return true;
             default:
+                console.log("GO BACK");
                 return false;
+                
         }
+        
     }
     private in():void{
+        console.log("IN");
         if(this.tokenChecker(TokenType.Read)){
-            this.currentIndex++;
+            this.incrementIndex();
         }else{
             this.addError(TokenType.Read);
         }
 
         if(this.tokenChecker(TokenType.ID)){
-            this.currentIndex++;
+            this.incrementIndex();
         }else{
             this.addError(TokenType.ID);
         }
 
         if(this.tokenChecker(TokenType.SemiColon)){
-            this.currentIndex++;
+            this.incrementIndex();
         }else{
             this.addError(TokenType.SemiColon);
         }
+        console.log("GO BACK");
     }
     private out():void{
+        console.log("OUT");
         if(this.tokenChecker(TokenType.Print)){
-            this.currentIndex++;
+            this.incrementIndex();
         }else{
             this.addError(TokenType.Print);
         }
@@ -201,19 +239,21 @@ export class Parser {
         this.expr();
 
         if(this.tokenChecker(TokenType.SemiColon)){
-            this.currentIndex++;
+            this.incrementIndex();
         }else{
             this.addError(TokenType.SemiColon);
         }
+        console.log("GO BACK");
     }
     private IF():void{
+        console.log("IF");
         if(this.tokenChecker(TokenType.If)){
-            this.currentIndex++;
+            this.incrementIndex();
         }else{
             this.addError(TokenType.If);
         }
         if(this.tokenChecker(TokenType.OpenSquareBrace)){
-            this.currentIndex++;
+            this.incrementIndex();
         }else{
             this.addError(TokenType.OpenSquareBrace);
         }
@@ -221,21 +261,23 @@ export class Parser {
         this.ro();
         this.expr();
         if(this.tokenChecker(TokenType.CloseSquareBrace)){
-            this.currentIndex++;
+            this.incrementIndex();
         }else{
             this.addError(TokenType.CloseSquareBrace);
         }
         this.block();
+        console.log("GO BACK");
     }
     private loop():void{
+        console.log("LOOP");
         if(this.tokenChecker(TokenType.Repeat)){
-            this.currentIndex++;
+            this.incrementIndex();
         }else{
             this.addError(TokenType.Repeat);
         }
 
         if(this.tokenChecker(TokenType.OpenSquareBrace)){
-            this.currentIndex++;
+            this.incrementIndex();
         }else{
             this.addError(TokenType.OpenSquareBrace);
         }
@@ -243,49 +285,57 @@ export class Parser {
         this.ro();
         this.expr();
         if(this.tokenChecker(TokenType.CloseSquareBrace)){
-            this.currentIndex++;
+            this.incrementIndex();
         }else{
             this.addError(TokenType.CloseSquareBrace);
         }
         this.block();
+        console.log("GO BACK");
     }
     private assign():void{
+        console.log("ASSIGN");
         if(this.tokenChecker(TokenType.ID)){
-            this.currentIndex++;
+            this.incrementIndex();
         }
 
         if(this.tokenChecker(TokenType.Assign)){
-            this.currentIndex++;
+            this.incrementIndex();
         }
 
         this.expr();
 
         if(this.tokenChecker(TokenType.SemiColon)){
-            this.currentIndex++;
+            this.incrementIndex();
         }
+        console.log("GO BACK");
     }
     private ro():void{
-
+        console.log("RO");
         //Less than and Equal
         switch(this.currentToken().tokenType){
             case TokenType.LessEqual:
-                this.currentIndex++;
+                this.incrementIndex();
                 break;
             case TokenType.GreatEqual:
-                this.currentIndex++;
+                this.incrementIndex();
                 break;
             case TokenType.Great:
-                this.currentIndex++;
+                this.incrementIndex();
                 break;
             case TokenType.Les:
-                this.currentIndex++;
+                this.incrementIndex();
                 break;
             case TokenType.NotEqual:
-                this.currentIndex++;
+                this.incrementIndex();
                 break;
             default:
                 this.addPossibleError(TokenType.Les, TokenType.NotEqual);
         }
+        console.log("GO BACK");
+    }
+    private incrementIndex():void{
+        console.log(this.currentToken());
+        this.currentIndex++;
     }
     private tokenChecker(token: TokenType): boolean{
         return this.currentTokenString() == token.toString()
