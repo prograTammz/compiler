@@ -21,6 +21,7 @@ export class AppComponent {
   displayedColumns: string[];
   tokenList: Token[];
   isAnalyzed = false;
+  isParsed = false;
   currentTab = 0;
   errorCount: number = 0;
   errors: string[];
@@ -38,6 +39,7 @@ export class AppComponent {
     console.log(parser.getError());
     console.log(parser.getState());
     console.log(parser.getRootNode());
+    this.isParsed = true;
     this.currentTab = 1;
     if(!parser.getState()){
       this.errorCount = parser.getErrorCount();
@@ -45,7 +47,9 @@ export class AppComponent {
       this.currentTab = 2;
     }else{
       setTimeout(() => {
+        document.getElementById("tree").innerHTML= "";
         this.processTree(parser.getRootNode(),document.getElementById("tree"));
+        
       }, 500);
       this.errorCount = parser.getErrorCount();
       this.errors = parser.getError().split("\n");

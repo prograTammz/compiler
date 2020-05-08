@@ -45,3 +45,13 @@ table{
 #tree{
     padding: 20px;
 }
+.message{
+    font-weight: 300;
+    padding-left: 16px;
+}
+.no-errors{
+    color:  green;
+}
+.errors{
+    color: red;
+}

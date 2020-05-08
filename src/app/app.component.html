@@ -27,7 +27,8 @@
     <mat-card-title>Output</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-  
+    <p class="message no-errors" *ngIf= "isParsed && errorCount == 0">Code Parsed sucessfully with no errors !</p>
+    <p class="message errors" *ngIf= "isParsed && errorCount != 0">Code Parsed unsucessfully with errors !</p>
     <mat-tab-group [selectedIndex]="currentTab">
       <mat-tab label="Token generator">
         <table mat-table [dataSource]="dataSource" >
