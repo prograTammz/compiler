@@ -393,6 +393,9 @@ export class Parser {
     public getError():string{
         return this.error;
     }
+    public getErrorCount():number{
+        return this.errorCount;
+    }
     public getState():boolean{
         return this.parsingState;
     }
