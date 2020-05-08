@@ -7,11 +7,13 @@ export class TreeNode {
     private name: string;
     private type: LeafType;
     private parentId: number;
+    public children: TreeNode[];
     constructor(id:number, name: string,type: LeafType, parentId: number = null){
         this.id = id;
         this.name = name;
         this.type = type;
         this.parentId = parentId;
+        this.children =[];
     }
 
     public getName(): string{
